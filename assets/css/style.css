@@ -72,3 +72,23 @@ main {
 .card-body1 {
     border-bottom: 2px solid black;
 }
+
+.card {
+    min-height: 200px;
+    margin: 0 15px;
+    background-color: #404040;
+    opacity: 1;
+}
+
+.flex-row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.flex-column {
+display: flex; 
+flex-direction: column;
+flex-wrap: wrap;
+}
+
+
