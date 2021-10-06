@@ -30,7 +30,7 @@ main {
 }
 
 .btn,
-.button {
+button {
     padding: 6px 5px;
     width: 100%;
     display: block;
@@ -64,20 +64,27 @@ main {
     text-align: center;
 }
 
-.card-header {
-    padding: 0 1.5rem;
-    background-color: white;
+#weather {
+    min-height: 300px;
+    border: 2px solid black;
+    width: 100%;
 }
 
 .card-body1 {
     border-bottom: 2px solid black;
 }
 
-.card {
+.f-card-one,
+.f-card-two,
+.f-card-three,
+.f-card-four,
+.f-card-five{
     min-height: 200px;
     margin: 0 15px;
+    color: whitesmoke;
     background-color: #404040;
     opacity: 1;
+
 }
 
 .flex-row {
