@@ -12,6 +12,18 @@ THEN I am presented with current and future conditions for that city and that ci
 ## WHEN I view current weather conditions for that city
 THEN I am presented with the city name, the date, an icon representation of weather conditions, the temperature, the humidity, the wind speed, and the UV index
 
+* let weatherPic = data.weather[0].icon;
+
+  weatherIconEl.setAttribute("src", " http://openweathermap.org/img/wn/" + weatherPic + "@2x.png");
+  weatherIconEl.setAttribute("alt", data.weather[0].description);
+
+  tempValueEl.innerHTML = "Temperature: " + k2f(data.main.temp) + " &#176F";
+
+  humidityEl.innerHTML = "Humidity: " + data.main.humidity + "%";
+
+  windSpeedEl.innerHTML = "Wind Speed: " + data.wind.speed + " MPH";
+
+
 ## WHEN I view the UV index
 THEN I am presented with a color that indicates whether the conditions are favorable, moderate, or severe
 

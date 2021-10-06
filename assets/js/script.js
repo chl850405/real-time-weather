@@ -43,8 +43,6 @@ var buttonClickHandler = function(searchCity) {
 
   if (weather) {
     getSearchedWeather(searchedCity)
-    
-
     // clear old content
     weatherContainerEl.textContent = "";
   }
@@ -52,6 +50,7 @@ var buttonClickHandler = function(searchCity) {
 
 // search a city's weather
 var getSearchedWeather = function(city) {
+  //temperal literal
   var apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=fbc29f5f6fe6308bdd370da37c3955a4`;
 
   console.log(apiUrl);
