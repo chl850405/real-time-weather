@@ -1,14 +1,23 @@
+//search variables
 var userFormEl = document.querySelector("#user-form");
 var cityInputEl = document.querySelector("#city");
 var searchCityBtnEl = document.querySelector("#submit")
 var weatherContainerEl = document.querySelector("#weather-container")
+
+//current weather variables
 var currentCityEl = document.querySelector(".currentCity")
 var weatherIconEl = document.getElementById("weather-icon")
 var tempValueEl = document.getElementById("temp")
 var windSpeedEl = document.getElementById("wind")
 var humidityEl = document.getElementById("humidity")
 var uvIndexEl = document.getElementById("uv-index")
-var fiveDayForcast = document.querySelector(".five-days")
+
+//forecast variables
+var fiveDayForecastEl = document.getElementById("fiveDayForecast")
+var forecastWeatherIconEl = document.getElementById("forecastWeatherIcon")
+var forecastTempValueEl = document.getElementById("forecastTemp")
+var forecastWindSpeedEl = document.getElementById("forecastWind")
+var forecastHumidityEl = document.getElementById("forecastHumidity")
 
 var key = "fbc29f5f6fe6308bdd370da37c3955a4";
 
@@ -17,11 +26,12 @@ var key = "fbc29f5f6fe6308bdd370da37c3955a4";
 var now = moment();
 
 $("#currentDate").text(moment().format("L"));
-$("#day-one").text(moment().format("L"));
-$("#day-two" ).text(moment().format("L"));
-$("#day-three").text(moment().format("L"));
-$("#day-four").text(moment().format("L"));
-$("#day-five").text(moment().format("L"));
+$("#day-one").text(moment(now).add(1 , 'day').format("L"));
+$("#day-two" ).text(moment().add(2 , 'day').format("L"));
+$("#day-three").text(moment().add(3 , 'day').format("L"));
+$("#day-four").text(moment().add(4 , 'day').format("L"));
+$("#day-five").text(moment().add(5 , 'day').format("L"));
+
 
 var formSubmitHandler = function(event) {
   //prevent page from refreshing
@@ -83,18 +93,32 @@ var getSearchedWeather = function(city) {
   });
 }
 
-var displayFiveDayForcast = function(display) {
+//five day forecast
+var getFiveDayForecast = function(city) {
+  //temperal literal
+  let forecastUrl = `api.openweathermap.org/data/2.5/forecast?q=${city}&appid=fbc29f5f6fe6308bdd370da37c3955a4`;
 
-  weatherIconEl.innerHTML =
-    // `img src="${weahter.iconElement}.png" />`;
+  console.log(forecastUrl);
 
-  tempVauleEl.innerHTML =
-    `$(weather.temp)<span>°F</span>`;
+  axios.get(forecastUrl)
+  .then(function(response) {
+    fiveDayForecastEl.classList.remove("d-none") 
 
-  windSpeedEl.innerHTML =
-  `$(weather.wind)<span>-</span>`;
-  humidityEl .innerHTML =
-  `$(weather.humidity)<span> - </span>`;
+  let weatherPic = response.data.weather[0].icon;
+
+  forecastWeatherIconEl.setAttribute("src", " http://openweathermap.org/img/wn/" + weatherPic + "@2x.png");
+  forecastWeatherIconEl.setAttribute("alt", response.data.weather[0].description);
+
+  forecastTempValueEl.innerHTML = "Temperature: " + k2f(response.data.main.temp) + " &#176F";
+
+  forecastHumidityEl.innerHTML = "Humidity: " + response.data.main.humidity + "%";
+
+  forecastWindSpeedEl.innerHTML = "Wind Speed: " + response.data.wind.speed + " MPH";
+
+  })
+  .catch(err => {
+    console.log(err);
+  })
 }
 
 function k2f(K) {
