@@ -3,7 +3,7 @@ var userFormEl = document.querySelector("#user-form");
 var cityInputEl = document.querySelector("#city");
 var searchCityBtnEl = document.querySelector("#submit");
 var weatherContainerEl = document.querySelector("#weather-container");
-const clearEl = document.getElementById("history");
+const clearEl = document.querySelector("#clear");
 
 
 //current weather variables
@@ -147,12 +147,7 @@ var renderCities = () => {
         // Append city to page
         $("#city-results").prepend(cityEl);
       }
-      // Add a "clear" button to page if there is a cities list
-      if (localStorage.length > 0) {
-        $("#clear-storage").html($('<a id="clear-storage" href="#">clear</a>'));
-      } else {
-        $("#clear-storage").html("");
-      }
+      
     }
   }
 };
@@ -183,8 +178,7 @@ searchCityBtnEl.addEventListener("click", function () {
 userFormEl.addEventListener("submit", formSubmitHandler);
 
 // Clear old searched cities 
-// clearEl.addEventListener("submit",
-//   localStorage.clear($("#city-results")
-//   ),
-//   renderCities()
-// );
+clearEl.addEventListener("click", function() {
+  localStorage.clear(),
+  renderCities()
+});
