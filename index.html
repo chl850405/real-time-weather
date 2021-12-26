@@ -32,22 +32,22 @@ crossorigin="anonymous"
   <main class="flex-row justify-space-between">
     <div class="col-12 col-md-3">
       <div class="card1">
-        <h3 class="card-header"> Search for a city:</h3>
-        <form id="user-form" class="card-body1">
-          <input id="city" name="city" type="text" placeholder="San Diego" autofocus="true" class="form-input"/>
-          <button id="submit" type="submit" class="btn">Search</button>
+          <h3 class="card-header"> Search for a city:</h3>
+          <form id="user-form" class="card-body1">
+            <input id="city" name="city" type="text" placeholder="San Diego" autofocus="true" class="form-input"/>
+            <button id="submit" type="submit" class="btn">Search</button>
+          </form>
+        <div>
+          <form id="history">
+            <button id="submit" type="submit" class="btn">Clear</button>
         </form>
-      <div>
-        <button class="btn btn-primary mb-3" type="button" id="clear-history">Clear history</button>
-        <form id="history"></form>
-      </div>
-      </div>
-
-      <div class="card2">
-        <div id=""city-history" class="card-body2">
         </div>
-      </div>
+        <div id="search-error"></div>
+        <!-- list of prior searched cities -->
+        <ul id="city-results" class="list-group mt-4"></ul>  
     </div>
+  </div>
+    
 
     <div class="col-12 col-md-8">
 
@@ -60,9 +60,45 @@ crossorigin="anonymous"
           <div id="uv-index"></div>
         </div>
 
-      <div id="fiveDayForecast" class="mt-5">
+      <div id="fiveDayForecast" class="container-fluid">
         <h3>5-Day Forecast:</h3>
-      </div>
+        <div class="row">
+            <div id="day-one" class="col-3 f-card-one">
+              <img id="forecastWeatherIcon" alt="">
+              <div id="forecastTemp"></div>
+              <div id="forecastWind"></div>
+              <div id="forecastHumidity"></div>
+            </div>
+
+            <div id="day-two" class="col-3 f-card-two">
+              <img id="forecastWeatherIcon" alt="">
+              <div id="forecastTemp"></div>
+              <div id="forecastWind"></div>
+              <div id="forecastHumidity"></div>
+            </div>
+
+            <div id="day-three" class="col-3 f-card-three">
+              <img id="forecastWeatherIcon" alt="">
+              <div id="forecastTemp"></div>
+              <div id="forecastWind"></div>
+              <div id="forecastHumidity"></div>
+            </div>
+
+            <div id="day-four" class=" col-3 f-card-four">
+              <img id="forecastWeatherIcon" alt="">
+              <div id="forecastTemp"></div>
+              <div id="forecastWind"></div>
+              <div id="forecastHumidity"></div>
+            </div>
+
+            <div id="day-five" class=" col-3 f-card-five">
+              <img id="forecastWeatherIcon" alt="">
+              <div id="forecastTemp"></div>
+              <div id="forecastWind"></div>
+              <div id="forecastHumidity"></div>
+            </div>
+
+        </div>
       </div>
 
     </div>    
