@@ -3,8 +3,7 @@ var userFormEl = document.querySelector("#user-form");
 var cityInputEl = document.querySelector("#city");
 var searchCityBtnEl = document.querySelector("#submit");
 var weatherContainerEl = document.querySelector("#weather-container");
-const clearEl = document.querySelector("#clear");
-
+var clearEl = document.querySelector("#clear");
 
 //current weather variables
 var currentCityEl = document.querySelector(".currentCity");
@@ -13,11 +12,11 @@ var tempValueEl = document.getElementById("temp");
 var windSpeedEl = document.getElementById("wind");
 var humidityEl = document.getElementById("humidity");
 var uvIndexEl = document.getElementById("uv-index");
-
+var forecastEl = document.getElementById("fiveDayForecast");
 // Error handler for fetch, trying to mimic the AJAX .fail command: https://www.tjvantoll.com/2015/09/13/fetch-and-errors/
 var handleErrors = (response) => {
   return response;
-}
+};
 
 var key = "fbc29f5f6fe6308bdd370da37c3955a4";
 
@@ -89,20 +88,49 @@ var getSearchedWeather = function (city) {
       humidityEl.innerHTML = "Humidity: " + data.main.humidity + "%";
 
       windSpeedEl.innerHTML = "Wind Speed: " + data.wind.speed + " MPH";
+
+      var lat = data.coord.lat;
+      var lon = data.coord.lon;
+      getUvIndex(lat, lon);
     })
     .catch((err) => {
       console.log(err);
-    })
-    .then((response) => {
-      // Save city to local storage
-      saveCity(city);
-      $("#search-error").text("");
-      // Render cities history list
-      renderCities();
-      // five day forecast for the searched city
-      // getFiveDayForecast();
     });
 };
+
+var getUvIndex = function (lat, lon) {
+  var apiKey = "844421298d794574c100e3409cee0499";
+  var apiURL = `https://api.openweathermap.org/data/2.5/uvi?appid=${apiKey}&lat=${lat}&lon=${lon}`;
+  fetch(apiURL).then(function (response) {
+    response.json().then(function (data) {
+      displayUvIndex(data);
+    });
+  });
+};
+
+var displayUvIndex = function (index) {
+  var uvIndexEl = document.createElement("div");
+  uvIndexEl.textContent = "UV Index: ";
+
+  uvIndexValue = document.createElement("span");
+  uvIndexValue.textContent = index.value;
+
+  if (index.value <= 2) {
+    uvIndexValue.classList = "favorable";
+  } else if (index.value > 2 && index.value <= 8) {
+    uvIndexValue.classList = "moderate ";
+  } else if (index.value > 8) {
+    uvIndexValue.classList = "severe";
+  }
+
+  uvIndexEl.appendChild(uvIndexValue);
+
+  //append index to current weather
+  weatherContainerEl.appendChild(uvIndexEl);
+};
+
+
+
 // Function to save the city to localStorage
 var saveCity = (newCity) => {
   let cityExists = false;
@@ -147,23 +175,9 @@ var renderCities = () => {
         // Append city to page
         $("#city-results").prepend(cityEl);
       }
-      
     }
   }
 };
-// Function to obtain the five day forecast 
-// var getFiveDayForecast = () => {
-//   let city = $("#city").data;
-//   // Set up URL for API search using forecast search
-//   let queryURL = `api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${key}`;
-//   // Fetch from API
-//   fetch(queryURL)
-//     .then(handleErrors)
-//     .then((response) => {
-//       return response.json();
-//     })
-//   console.log(fiveDayForecast);
-// };
 
 function k2f(K) {
   return Math.floor((K - 273.15) * 1.8 + 32);
@@ -177,8 +191,7 @@ searchCityBtnEl.addEventListener("click", function () {
 
 userFormEl.addEventListener("submit", formSubmitHandler);
 
-// Clear old searched cities 
-clearEl.addEventListener("click", function() {
-  localStorage.clear(),
-  renderCities()
+// Clear old searched cities
+clearEl.addEventListener("click", function () {
+  localStorage.clear(), renderCities();
 });
