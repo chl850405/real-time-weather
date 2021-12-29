@@ -13,6 +13,15 @@ var windSpeedEl = document.getElementById("wind");
 var humidityEl = document.getElementById("humidity");
 var uvIndexEl = document.getElementById("uv-index");
 var forecastEl = document.getElementById("fiveDayForecast");
+var forecastContainerEl = document.getElementById("card");
+
+var forecastWeatherIconEl = document.getElementById("weather-icon");
+var tempValueEl = document.getElementById("temp");
+var windSpeedEl = document.getElementById("wind");
+var humidityEl = document.getElementById("humidity");
+var uvIndexEl = document.getElementById("uv-index");
+
+
 // Error handler for fetch, trying to mimic the AJAX .fail command: https://www.tjvantoll.com/2015/09/13/fetch-and-errors/
 var handleErrors = (response) => {
   return response;
@@ -96,6 +105,7 @@ var getSearchedWeather = function (city) {
     .catch((err) => {
       console.log(err);
     });
+  getForecast(city);
 };
 
 var getUvIndex = function (lat, lon) {
@@ -129,8 +139,54 @@ var displayUvIndex = function (index) {
   weatherContainerEl.appendChild(uvIndexEl);
 };
 
+var getForecast = function (city) {
+  console.log("hey", city)
+  var apiURL = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=imperial&appid=${key}`;
+
+  fetch(apiURL).then(function (response) {
+    response.json().then(function (data) {
+      console.log("hey", data)
+      displayForecast(data.list)
+    });
+  });
+};
+
+var displayForecast = function (weather) {
 
 
+  // console.log(weather)
+
+  for (var i = 0; i < weather.length; i = i + 8) {
+    forecastContainerEl = ""
+    var dailyForecast = [i];
+
+    // console.log(weather)
+
+    let forecastContainer= document.createElement("div")
+
+    let iconContainer = document.createElement("p")
+    iconContainer.setAttribute("alt", weather[i].weather[0].description);
+    forecastContainer.appendChild(iconContainer)
+    console.log(iconContainer);
+
+    let tempContainer = document.createElement("p")
+    tempContainer.innerHTML = "Temperature: " + k2f(weather[i].main.temp) + " &#176F";
+    forecastContainer.appendChild(tempContainer)
+    console.log(temp);
+
+    let humidityContainer = document.createElement("p")
+    humidityContainer.innerHTML = "Humidity: " + weather[i].main.humidity + "%";
+    forecastContainer.appendChild(humidityContainer)
+    console.log(humidity);
+
+    let windContainer = document.createElement("p")
+    windContainer.innerHTML = "Wind Speed: " + weather[i].wind.speed + " MPH";
+    forecastContainer.appendChild(windContainer)
+    console.log(forecastContainer)
+    forecastEl.appendChild(forecastContainer)
+    console.log(forecastEl);
+  }
+};
 // Function to save the city to localStorage
 var saveCity = (newCity) => {
   let cityExists = false;
@@ -173,7 +229,7 @@ var renderCities = () => {
         cityEl = `<button type="button" class="list-group-item list-group-item-action active">${city}</button></li>`;
         // }
         // Append city to page
-        $("#city-results").prepend(cityEl);
+        $("#city-results").appendChild(cityEl);
       }
     }
   }
@@ -187,6 +243,7 @@ searchCityBtnEl.addEventListener("click", function () {
   const searchTerm = cityInputEl.value;
   searchHistory.push(searchTerm);
   localStorage.setItem("search", JSON.stringify(searchHistory));
+  saveCity()
 });
 
 userFormEl.addEventListener("submit", formSubmitHandler);
