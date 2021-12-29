@@ -15,12 +15,6 @@ var uvIndexEl = document.getElementById("uv-index");
 var forecastEl = document.getElementById("fiveDayForecast");
 var forecastContainerEl = document.getElementById("card");
 
-var forecastWeatherIconEl = document.getElementById("weather-icon");
-var tempValueEl = document.getElementById("temp");
-var windSpeedEl = document.getElementById("wind");
-var humidityEl = document.getElementById("humidity");
-var uvIndexEl = document.getElementById("uv-index");
-
 
 // Error handler for fetch, trying to mimic the AJAX .fail command: https://www.tjvantoll.com/2015/09/13/fetch-and-errors/
 var handleErrors = (response) => {
@@ -36,11 +30,6 @@ var searchHistory = [];
 var now = moment();
 
 $("#currentDate").text(moment().format("L"));
-$("#day-one").text(moment(now).add(1, "day").format("L"));
-$("#day-two").text(moment().add(2, "day").format("L"));
-$("#day-three").text(moment().add(3, "day").format("L"));
-$("#day-four").text(moment().add(4, "day").format("L"));
-$("#day-five").text(moment().add(5, "day").format("L"));
 
 var formSubmitHandler = function (event) {
   //prevent page from refreshing
@@ -105,8 +94,10 @@ var getSearchedWeather = function (city) {
     .catch((err) => {
       console.log(err);
     });
-  getForecast(city);
-};
+  getForecast(city)
+  saveCity(city);
+  renderCities()
+}
 
 var getUvIndex = function (lat, lon) {
   var apiKey = "844421298d794574c100e3409cee0499";
@@ -143,31 +134,39 @@ var getForecast = function (city) {
   console.log("hey", city)
   var apiURL = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=imperial&appid=${key}`;
 
-  fetch(apiURL).then(function (response) {
-    response.json().then(function (data) {
+  fetch(apiURL)
+  .then(function (response) {
+      response.json()
+    .then(function (data) {
       console.log("hey", data)
       displayForecast(data.list)
-    });
-  });
-};
+    })
+  })
+// };
 
 var displayForecast = function (weather) {
-
 
   // console.log(weather)
 
   for (var i = 0; i < weather.length; i = i + 8) {
+    let data = weather
     forecastContainerEl = ""
-    var dailyForecast = [i];
+    dailyForecast = [i]
+   
 
     // console.log(weather)
 
     let forecastContainer= document.createElement("div")
 
-    let iconContainer = document.createElement("p")
-    iconContainer.setAttribute("alt", weather[i].weather[0].description);
-    forecastContainer.appendChild(iconContainer)
-    console.log(iconContainer);
+    let forecastDateEl = document.createElement("p");
+    forecastDateEl.innerHTML = (moment(now).add(1 , "day").format("L"));
+    forecastContainer.appendChild(forecastDateEl);
+
+    let weather_img = document.createElement("img") 
+    weather_img.setAttribute("src", "http://openweathermap.org/img/wn/" + dailyForecast + "@2x.png")
+    weather_img.setAttribute("alt", weather[0].description);
+    forecastContainer.prepend(weather_img);
+    console.log(weather_img);
 
     let tempContainer = document.createElement("p")
     tempContainer.innerHTML = "Temperature: " + k2f(weather[i].main.temp) + " &#176F";
@@ -186,6 +185,7 @@ var displayForecast = function (weather) {
     forecastEl.appendChild(forecastContainer)
     console.log(forecastEl);
   }
+}
 };
 // Function to save the city to localStorage
 var saveCity = (newCity) => {
@@ -212,7 +212,7 @@ var renderCities = () => {
     }
   } else {
     // Build key of last city written to localStorage
-    let lastCityKey = "cities" + (localStorage.length - 1);
+    let lastCityKey = "cities" + (localStorage.length);
     lastCity = localStorage.getItem(lastCityKey);
     // Set search input to last city searched
     $("#city").attr("value", lastCity);
@@ -229,7 +229,7 @@ var renderCities = () => {
         cityEl = `<button type="button" class="list-group-item list-group-item-action active">${city}</button></li>`;
         // }
         // Append city to page
-        $("#city-results").appendChild(cityEl);
+        $("#city-results").prepend(cityEl);
       }
     }
   }

@@ -32,3 +32,48 @@ THEN I am presented with a 5-day forecast that displays the date, an icon repres
 
 ## WHEN I click on a city in the search history
 THEN I am again presented with current and future conditions for that city
+
+    <div id="card" class="col-3 f-card-one>
+              <div id="day-one">
+                <img id="forecastWeatherIcon" alt="">
+                <div id="forecastTemp"></div>
+                <div id="forecastWind"></div>
+                <div id="forecastHumidity"></div>
+              </div>
+            </div>
+
+            <div id="card" class="col-3 f-card-two>
+              <div id="day-two">
+                <img id="forecastWeatherIcon" alt="">
+                <div id="forecastTemp"></div>
+                <div id="forecastWind"></div>
+                <div id="forecastHumidity"></div>
+              </div>
+            </div>
+
+            <div id="card">
+              <div id="day-three class="col-3 f-card-three">
+                <img id="forecastWeatherIcon" alt="">
+                <div id="forecastTemp"></div>
+                <div id="forecastWind"></div>
+                <div id="forecastHumidity"></div>
+              </div>
+            </div>
+
+            <div id="card" class="col-3 f-card-four>
+              <div id="day-four">
+                <img id="forecastWeatherIcon" alt="">
+                <div id="forecastTemp"></div>
+                <div id="forecastWind"></div>
+                <div id="forecastHumidity"></div>
+              </div>
+            </div>
+
+            <div id="card" class="col-3 f-card-five>
+              <div id="day-five">
+                <img id="forecastWeatherIcon" alt="">
+                <div id="forecastTemp"></div>
+                <div id="forecastWind"></div>
+                <div id="forecastHumidity"></div>
+              </div>
+            </div>
