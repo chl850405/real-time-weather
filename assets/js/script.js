@@ -154,16 +154,21 @@ var getForecast = function (city) {
       forecastContainer.classList = "card bg-dark text-light m-2"
     
   
-      let forecastDateEl = document.createElement("p");
-      forecastDateEl.innerHTML = (moment(now).add(1 , "day").format("L"));
-      forecastContainer.appendChild(forecastDateEl);
+      // let dateContainer = document.createElement("p");
+      // // var duration = moment.duration({'days' : 1});
+      // // dateContainer.textContent = moment().add(duration).format("L");
+      // var start = moment().format("L");
+      // var end   = moment(5).format("L");
+      // dateContainer.textContent = moment(start).from(end);      // "in 5 days"
+      // forecastContainer.appendChild(dateContainer);
   
       // let weather_img = document.createElement("img") 
       // weather_img.setAttribute("src", "http://openweathermap.org/img/wn/" + data.weather[0].icon  + ".png")
       // weather_img.setAttribute("alt", weather[0].description);
       // forecastContainer.prepend(weather_img);
       // console.log(weather_img);
-  
+      // weather_img.setAttribute("src", `https://openweathermap.org/img/wn/${dailyForecast.weather[0].icon}@2x.png`);
+
       let tempContainer = document.createElement("p")
       tempContainer.innerHTML = "Temperature: " + k2f(weather[i].main.temp) + " &#176F";
       forecastContainer.appendChild(tempContainer)
@@ -233,7 +238,7 @@ var renderCities = () => {
 };
 
 function k2f(K) {
-  return Math.floor((K - 273.15) * 1.8 + 32);
+  return Math.floor((K - 273.15) * 1.8)+ 32;
 }
 
 searchCityBtnEl.addEventListener("click", function () {
