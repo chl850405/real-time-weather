@@ -15,7 +15,6 @@ var uvIndexEl = document.getElementById("uv-index");
 var forecastEl = document.getElementById("fiveDayForecast");
 var forecastContainerEl = document.getElementById("card");
 
-
 // Error handler for fetch, trying to mimic the AJAX .fail command: https://www.tjvantoll.com/2015/09/13/fetch-and-errors/
 var handleErrors = (response) => {
   return response;
@@ -94,10 +93,10 @@ var getSearchedWeather = function (city) {
     .catch((err) => {
       console.log(err);
     });
-  getForecast(city)
+  getForecast(city);
   saveCity(city);
-  renderCities()
-}
+  renderCities();
+};
 
 var getUvIndex = function (lat, lon) {
   var apiKey = "844421298d794574c100e3409cee0499";
@@ -131,62 +130,60 @@ var displayUvIndex = function (index) {
 };
 
 var getForecast = function (city) {
-  console.log("hey", city)
+  console.log("hey", city);
   var apiURL = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=imperial&appid=${key}`;
 
-  fetch(apiURL)
-  .then(function (response) {
-      response.json()
-    .then(function (data) {
+  fetch(apiURL).then(function (response) {
+    response.json().then(function (data) {
       console.log("hey", data)
       displayForecast(data.list)
     })
   })
-// };
 
-var displayForecast = function (weather) {
-
-  // console.log(weather)
-
-  for (var i = 0; i < weather.length; i = i + 8) {
-    let data = weather
-    forecastContainerEl = ""
-    dailyForecast = [i]
-   
+  var displayForecast = function (weather) {
 
     // console.log(weather)
-
-    let forecastContainer= document.createElement("div")
-
-    let forecastDateEl = document.createElement("p");
-    forecastDateEl.innerHTML = (moment(now).add(1 , "day").format("L"));
-    forecastContainer.appendChild(forecastDateEl);
-
-    let weather_img = document.createElement("img") 
-    weather_img.setAttribute("src", "http://openweathermap.org/img/wn/" + dailyForecast + "@2x.png")
-    weather_img.setAttribute("alt", weather[0].description);
-    forecastContainer.prepend(weather_img);
-    console.log(weather_img);
-
-    let tempContainer = document.createElement("p")
-    tempContainer.innerHTML = "Temperature: " + k2f(weather[i].main.temp) + " &#176F";
-    forecastContainer.appendChild(tempContainer)
-    console.log(temp);
-
-    let humidityContainer = document.createElement("p")
-    humidityContainer.innerHTML = "Humidity: " + weather[i].main.humidity + "%";
-    forecastContainer.appendChild(humidityContainer)
-    console.log(humidity);
-
-    let windContainer = document.createElement("p")
-    windContainer.innerHTML = "Wind Speed: " + weather[i].wind.speed + " MPH";
-    forecastContainer.appendChild(windContainer)
-    console.log(forecastContainer)
-    forecastEl.appendChild(forecastContainer)
-    console.log(forecastEl);
+  
+    for (var i = 0; i < weather.length; i = i + 8) {
+      let data = weather
+      forecastContainerEl = ""
+      dailyForecast = [i]
+  
+      // console.log(weather)
+      let forecastContainer= document.createElement("div")
+      forecastContainer.classList = "card bg-dark text-light m-2"
+    
+  
+      let forecastDateEl = document.createElement("p");
+      forecastDateEl.innerHTML = (moment(now).add(1 , "day").format("L"));
+      forecastContainer.appendChild(forecastDateEl);
+  
+      // let weather_img = document.createElement("img") 
+      // weather_img.setAttribute("src", "http://openweathermap.org/img/wn/" + data.weather[0].icon  + ".png")
+      // weather_img.setAttribute("alt", weather[0].description);
+      // forecastContainer.prepend(weather_img);
+      // console.log(weather_img);
+  
+      let tempContainer = document.createElement("p")
+      tempContainer.innerHTML = "Temperature: " + k2f(weather[i].main.temp) + " &#176F";
+      forecastContainer.appendChild(tempContainer)
+      console.log(temp);
+  
+      let humidityContainer = document.createElement("p")
+      humidityContainer.innerHTML = "Humidity: " + weather[i].main.humidity + "%";
+      forecastContainer.appendChild(humidityContainer)
+      console.log(humidity);
+  
+      let windContainer = document.createElement("p")
+      windContainer.innerHTML = "Wind Speed: " + weather[i].wind.speed + " MPH";
+      forecastContainer.appendChild(windContainer)
+      console.log(forecastContainer)
+      forecastEl.appendChild(forecastContainer)
+      console.log(forecastEl);
+    }
   }
-}
-};
+  };
+
 // Function to save the city to localStorage
 var saveCity = (newCity) => {
   let cityExists = false;
@@ -212,7 +209,7 @@ var renderCities = () => {
     }
   } else {
     // Build key of last city written to localStorage
-    let lastCityKey = "cities" + (localStorage.length);
+    let lastCityKey = "cities" + localStorage.length;
     lastCity = localStorage.getItem(lastCityKey);
     // Set search input to last city searched
     $("#city").attr("value", lastCity);
@@ -243,7 +240,7 @@ searchCityBtnEl.addEventListener("click", function () {
   const searchTerm = cityInputEl.value;
   searchHistory.push(searchTerm);
   localStorage.setItem("search", JSON.stringify(searchHistory));
-  saveCity()
+  saveCity();
 });
 
 userFormEl.addEventListener("submit", formSubmitHandler);

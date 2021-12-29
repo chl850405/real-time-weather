@@ -74,19 +74,6 @@ button {
     border-bottom: 2px solid black;
 }
 
-.f-card-one,
-.f-card-two,
-.f-card-three,
-.f-card-four,
-.f-card-five{
-    min-height: 200px;
-    margin: 15px;
-    color: whitesmoke;
-    background-color: #404040;
-    opacity: 1;
-
-}
-
 .flex-row {
     display: flex;
     flex-wrap: wrap;
@@ -94,7 +81,7 @@ button {
 
 .flex-column {
 display: flex; 
-flex-direction: column;
+flex-direction: row;
 flex-wrap: wrap;
 }
 
