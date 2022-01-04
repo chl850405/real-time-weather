@@ -74,6 +74,10 @@ button {
     border-bottom: 2px solid black;
 }
 
+/* over rides bootstrapand blocks display:flex to make icon small */
+.card{
+    display: block;
+}
 .flex-row {
     display: flex;
     flex-wrap: wrap;
