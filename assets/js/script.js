@@ -1,7 +1,7 @@
 //search variables
 var userFormEl = document.querySelector("#user-form");
 var cityInputEl = document.querySelector("#city");
-var searchCityBtnEl = document.querySelector("#submit");
+var searchHistoryBtnEl = document.querySelector("#city-results");
 var weatherContainerEl = document.querySelector("#weather-container");
 var clearEl = document.querySelector("#clear");
 
@@ -24,7 +24,7 @@ var key = "fbc29f5f6fe6308bdd370da37c3955a4";
 
 var lastCity = "";
 
-var searchHistory = [];
+let searchHistory = JSON.parse(localStorage.getItem("search")) || [];
 
 var now = moment();
 
@@ -228,16 +228,37 @@ var renderCities = () => {
 function k2f(K) {
   return Math.floor((K - 273.15) * 1.8)+ 32;
 }
+function getSearchHistory() {
+  cityResults.innerHTML = "";
+  for (let i = 0; i < searchHistory.length; i++) {
+    searchHistoryBtnEl  = document.createElement("button");
+      searchHistoryBtnEl.setAttribute("type", "text");
+      searchHistoryBtnEl.setAttribute("readonly", true);
+      searchHistoryBtnEl.setAttribute("class", "form-control d-block bg-white");
+      searchHistoryBtnEl.setAttribute("value", searchHistory[i]);
+      searchHistoryBtnEl.addEventListener("click", function () {
+          getSearchedWeather(historyItem.value);
+      })
+    cityResults.append(searchHistoryBtnEl);
+  }
+}
 
-searchCityBtnEl.addEventListener("click", function () {
-  const searchTerm = cityInputEl.value;
-  searchHistory.push(searchTerm);
+getSearchHistory();
+if (searchHistory.length > 0) {
+  getSearchedWeather(searchHistory[searchHistory.length - 1]);
+}
+
+
+searchHistoryBtnEl.addEventListener("click", function () {
+  console.log(searchHistory)
+
   localStorage.setItem("search", JSON.stringify(searchHistory));
-  saveCity();
-});
+  
+  },
+  getSearchHistory()
+  )
 
 userFormEl.addEventListener("submit", formSubmitHandler);
-searchHistoryContainer.addEventListener('click', handleSearchHistoryClick);
 
 // Clear old searched cities
 clearEl.addEventListener("click", function () {
