@@ -1,7 +1,7 @@
 //search variables
 var userFormEl = document.querySelector("#user-form");
 var cityInputEl = document.querySelector("#city");
-var searchHistoryBtnEl = document.querySelector("#city-results");
+var searchHistoryBtnEl = document.querySelector("#cityResults");
 var weatherContainerEl = document.querySelector("#weather-container");
 var clearEl = document.querySelector("#clear");
 
@@ -194,7 +194,7 @@ var saveCity = (newCity) => {
 };
 // Render the list of searched cities
 var renderCities = () => {
-  $("#city-results").empty();
+  $("#cityResults").empty();
   // If localStorage is empty
   if (localStorage.length === 0) {
     if (lastCity) {
@@ -217,9 +217,8 @@ var renderCities = () => {
       // Set button class to active for currentCity
       if (city === city) {
         cityEl = `<button type="button" class="list-group-item list-group-item-action active">${city}</button></li>`;
-        // }
         // Append city to page
-        $("#city-results").prepend(cityEl);
+        $("#cityResults").prepend(cityEl);
       }
     }
   }
@@ -228,13 +227,11 @@ var renderCities = () => {
 function k2f(K) {
   return Math.floor((K - 273.15) * 1.8)+ 32;
 }
+
+
 function getSearchHistory() {
   cityResults.innerHTML = "";
   for (let i = 0; i < searchHistory.length; i++) {
-    searchHistoryBtnEl  = document.createElement("button");
-      searchHistoryBtnEl.setAttribute("type", "text");
-      searchHistoryBtnEl.setAttribute("readonly", true);
-      searchHistoryBtnEl.setAttribute("class", "form-control d-block bg-white");
       searchHistoryBtnEl.setAttribute("value", searchHistory[i]);
       searchHistoryBtnEl.addEventListener("click", function () {
           getSearchedWeather(historyItem.value);
@@ -259,8 +256,8 @@ searchHistoryBtnEl.addEventListener("click", function () {
   )
 
 userFormEl.addEventListener("submit", formSubmitHandler);
-
 // Clear old searched cities
 clearEl.addEventListener("click", function () {
-  localStorage.clear(), renderCities();
+  localStorage.clear() 
+  
 });
