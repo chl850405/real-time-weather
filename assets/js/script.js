@@ -15,16 +15,11 @@ var uvIndexEl = document.getElementById("uv-index");
 var forecastEl = document.getElementById("fiveDayForecast");
 var forecastContainerEl = document.getElementById("card");
 
-// Error handler for fetch, trying to mimic the AJAX .fail command: https://www.tjvantoll.com/2015/09/13/fetch-and-errors/
-var handleErrors = (response) => {
-  return response;
-};
-
 var key = "fbc29f5f6fe6308bdd370da37c3955a4";
 
 var lastCity = "";
 
-let searchHistory = JSON.parse(localStorage.getItem("search")) || [];
+let searchHistory = JSON.parse(localStorage.getItem("lastCity")) || [];
 
 var now = moment();
 
@@ -40,17 +35,6 @@ var formSubmitHandler = function (event) {
     getSearchedWeather(city);
   } else {
     alert("Please enter city name");
-  }
-};
-
-var buttonClickHandler = function (searchedCity) {
-  // get the language attribute from the clicked element
-  var searchedCity = city.target.getAttribute("data-weather");
-
-  if (weather) {
-    getSearchedWeather(searchedCity);
-    // clear old content
-    weatherContainerEl.textContent = "";
   }
 };
 
@@ -173,9 +157,10 @@ var getForecast = function (city) {
       console.log(forecastContainer)
       forecastEl.appendChild(forecastContainer)
       console.log(forecastEl);
+    } 
     }
   }
-  };
+
 
 // Function to save the city to localStorage
 var saveCity = (newCity) => {
@@ -198,14 +183,14 @@ var renderCities = () => {
   // If localStorage is empty
   if (localStorage.length === 0) {
     if (lastCity) {
-      $("#city").attr("value", lastCity);
+      $("#cityResults").attr("value", lastCity);
     }
   } else {
     // Build key of last city written to localStorage
     let lastCityKey = "cities" + localStorage.length;
     lastCity = localStorage.getItem(lastCityKey);
     // Set search input to last city searched
-    $("#city").attr("value", lastCity);
+    $("#cityResults").attr("value", lastCity);
     // Append stored cities to page
     for (let i = 0; i < localStorage.length; i++) {
       let city = localStorage.getItem("cities" + i);
@@ -229,31 +214,12 @@ function k2f(K) {
 }
 
 
-function getSearchHistory() {
-  cityResults.innerHTML = "";
-  for (let i = 0; i < searchHistory.length; i++) {
-      searchHistoryBtnEl.setAttribute("value", searchHistory[i]);
-      searchHistoryBtnEl.addEventListener("click", function () {
-          getSearchedWeather(historyItem.value);
-      })
-    cityResults.append(searchHistoryBtnEl);
-  }
-}
-
-getSearchHistory();
-if (searchHistory.length > 0) {
-  getSearchedWeather(searchHistory[searchHistory.length - 1]);
-}
-
-
 searchHistoryBtnEl.addEventListener("click", function () {
-  console.log(searchHistory)
-
-  localStorage.setItem("search", JSON.stringify(searchHistory));
-  
-  },
-  getSearchHistory()
-  )
+  console.log(searchHistoryBtnEl)
+  if (searchHistory > 0) {
+    getSearchedWeather(searchHistory.length - 1);
+  }
+  })
 
 userFormEl.addEventListener("submit", formSubmitHandler);
 // Clear old searched cities
