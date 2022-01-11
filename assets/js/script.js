@@ -19,7 +19,7 @@ var key = "fbc29f5f6fe6308bdd370da37c3955a4";
 
 var lastCity = "";
 
-let searchHistory = JSON.parse(localStorage.getItem("lastCity")) || [];
+let searchHistory = JSON.parse(localStorage.getItem("search")) || [];
 
 var now = moment();
 
@@ -52,7 +52,7 @@ var getSearchedWeather = function (city) {
     })
     //display current weather conditions
     .then(function (data) {
-      console.log(data);
+      // console.log(data);
 
       currentCityEl.innerHTML = data.name + moment().format("L");
 
@@ -111,7 +111,7 @@ var displayUvIndex = function (index) {
 };
 
 var getForecast = function (city) {
-  console.log("hey", city);
+  // console.log("hey", city);
   var apiURL = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=imperial&appid=${key}`;
 
   fetch(apiURL).then(function (response) {
@@ -128,7 +128,6 @@ var getForecast = function (city) {
     for (var i = 0; i < weather.length; i = i + 8) {
       // let data = forecast
       forecastContainerEl = ""
-      dailyForecast = [i]
   
       // console.log(weather)
       let forecastContainer= document.createElement("div")
@@ -138,25 +137,25 @@ var getForecast = function (city) {
       weather_img.setAttribute("src", "http://openweathermap.org/img/wn/" + weather[i].weather[0].icon  + "@2x.png")
       weather_img.setAttribute("alt", weather[i].description);
       forecastContainer.prepend(weather_img);
-      console.log(weather_img);
+      // console.log(weather_img);
       
 
       let tempContainer = document.createElement("p")
       tempContainer.innerHTML = "Temperature: " + (weather[i].main.temp) + " &#176F";
       forecastContainer.appendChild(tempContainer)
-      console.log(temp);
+      // console.log(temp);
   
       let humidityContainer = document.createElement("p")
       humidityContainer.innerHTML = "Humidity: " + weather[i].main.humidity + "%";
       forecastContainer.appendChild(humidityContainer)
-      console.log(humidity);
+      // console.log(humidity);
   
       let windContainer = document.createElement("p")
       windContainer.innerHTML = "Wind Speed: " + weather[i].wind.speed + " MPH";
       forecastContainer.appendChild(windContainer)
-      console.log(forecastContainer)
+      // console.log(forecastContainer)
       forecastEl.appendChild(forecastContainer)
-      console.log(forecastEl);
+      // console.log(forecastEl);
     } 
     }
   }
@@ -213,13 +212,12 @@ function k2f(K) {
   return Math.floor((K - 273.15) * 1.8)+ 32;
 }
 
-
-searchHistoryBtnEl.addEventListener("click", function () {
-  console.log(searchHistoryBtnEl)
-  if (searchHistory > 0) {
-    getSearchedWeather(searchHistory.length - 1);
-  }
-  })
+$( document ).on("click",".list-group-item",function() {
+  console.log($(this).text())
+  
+    getSearchedWeather($(this).text());
+  
+});
 
 userFormEl.addEventListener("submit", formSubmitHandler);
 // Clear old searched cities
