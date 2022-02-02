@@ -94,7 +94,6 @@ var getUvIndex = function (lat, lon) {
 
 var displayUvIndex = function (index) {
   // var uvIndexEl = document.createElement("div");
-  
 
   uvIndexValue = document.createElement("span");
   uvIndexValue.textContent = index.value;
@@ -116,50 +115,54 @@ var getForecast = function (city) {
 
   fetch(apiURL).then(function (response) {
     response.json().then(function (data) {
-      console.log("hey", data)
-      displayForecast(data.list)
-    })
-  })
+      console.log("hey", data);
+      displayForecast(data.list);
+    });
+  });
 
   var displayForecast = function (weather) {
-
     // console.log(weather)
-  
+
     for (var i = 0; i < weather.length; i = i + 8) {
       // let data = forecast
-      forecastContainerEl = ""
-  
+      forecastContainerEl = "";
+
       // console.log(weather)
-      let forecastContainer= document.createElement("div")
-      forecastContainer.classList = "card bg-dark text-light m-2"
-  
-      let weather_img = document.createElement("img") 
-      weather_img.setAttribute("src", "http://openweathermap.org/img/wn/" + weather[i].weather[0].icon  + "@2x.png")
+      let forecastContainer = document.createElement("div");
+      forecastContainer.classList = "card bg-dark text-light m-2";
+
+      let weather_img = document.createElement("img");
+      weather_img.setAttribute(
+        "src",
+        "http://openweathermap.org/img/wn/" +
+          weather[i].weather[0].icon +
+          "@2x.png"
+      );
       weather_img.setAttribute("alt", weather[i].description);
       forecastContainer.prepend(weather_img);
       // console.log(weather_img);
-      
 
-      let tempContainer = document.createElement("p")
-      tempContainer.innerHTML = "Temperature: " + (weather[i].main.temp) + " &#176F";
-      forecastContainer.appendChild(tempContainer)
+      let tempContainer = document.createElement("p");
+      tempContainer.innerHTML =
+        "Temperature: " + weather[i].main.temp + " &#176F";
+      forecastContainer.appendChild(tempContainer);
       // console.log(temp);
-  
-      let humidityContainer = document.createElement("p")
-      humidityContainer.innerHTML = "Humidity: " + weather[i].main.humidity + "%";
-      forecastContainer.appendChild(humidityContainer)
-      // console.log(humidity);
-  
-      let windContainer = document.createElement("p")
-      windContainer.innerHTML = "Wind Speed: " + weather[i].wind.speed + " MPH";
-      forecastContainer.appendChild(windContainer)
-      // console.log(forecastContainer)
-      forecastEl.appendChild(forecastContainer)
-      // console.log(forecastEl);
-    } 
-    }
-  }
 
+      let humidityContainer = document.createElement("p");
+      humidityContainer.innerHTML =
+        "Humidity: " + weather[i].main.humidity + "%";
+      forecastContainer.appendChild(humidityContainer);
+      // console.log(humidity);
+
+      let windContainer = document.createElement("p");
+      windContainer.innerHTML = "Wind Speed: " + weather[i].wind.speed + " MPH";
+      forecastContainer.appendChild(windContainer);
+      // console.log(forecastContainer)
+      forecastEl.appendChild(forecastContainer);
+      // console.log(forecastEl);
+    }
+  };
+};
 
 // Function to save the city to localStorage
 var saveCity = (newCity) => {
@@ -209,19 +212,17 @@ var renderCities = () => {
 };
 
 function k2f(K) {
-  return Math.floor((K - 273.15) * 1.8)+ 32;
+  return Math.floor((K - 273.15) * 1.8) + 32;
 }
 
-$( document ).on("click",".list-group-item",function() {
-  console.log($(this).text())
-  
-    getSearchedWeather($(this).text());
-  
+$(document).on("click", ".list-group-item", function () {
+  console.log($(this).text());
+
+  getSearchedWeather($(this).text());
 });
 
 userFormEl.addEventListener("submit", formSubmitHandler);
 // Clear old searched cities
 clearEl.addEventListener("click", function () {
-  localStorage.clear() 
-  
+  localStorage.clear();
 });

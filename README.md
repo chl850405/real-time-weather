@@ -1,79 +1,36 @@
-# real-time-weather
+# Real Time Weather
 
-## AS A traveler
-I WANT to see the weather outlook for multiple cities
-SO THAT I can plan a trip accordingly
+## Description 
+Real Time Weather is a weather dashboard that will run in the browser and feature dynamically updated HTML and CSS using JavaScript with a third party API https://openweathermap.org/api/one-call-api
 
-## GIVEN a weather dashboard with form inputs
+## Table of Contents
+* [Installation](#installation)
+* [Usage](#usage)
+* [License](#license)
+* [Contributing](#contributing)
+* [Tests](#tests)
+* [Questions](#questions)
 
-## WHEN I search for a city
-THEN I am presented with current and future conditions for that city and that city is added to the search history
+## Installation 
+The user should clone the repository from GitHub. Once updates are made you can commit any changes and deploy to github.
 
-## WHEN I view current weather conditions for that city
-THEN I am presented with the city name, the date, an icon representation of weather conditions, the temperature, the humidity, the wind speed, and the UV index
+## Usage 
+This application will allow users search for a city's current weather and five day forecast. This app also allows the user the click on past searched citys to look at their current weather again.
 
-* let weatherPic = data.weather[0].icon;
+![The mockup](./assets/weather-dashboard.png) Real Time Weather
 
-  weatherIconEl.setAttribute("src", " http://openweathermap.org/img/wn/" + weatherPic + "@2x.png");
-  weatherIconEl.setAttribute("alt", data.weather[0].description);
+https://github.com/chl850405/real-time-weather.git
 
-  tempValueEl.innerHTML = "Temperature: " + k2f(data.main.temp) + " &#176F";
+https://chl850405.github.io/real-time-weather/
 
-  humidityEl.innerHTML = "Humidity: " + data.main.humidity + "%";
+## License 
+This project is not licensed
 
-  windSpeedEl.innerHTML = "Wind Speed: " + data.wind.speed + " MPH";
+## Contributing 
+Contributors should read the installation section. 
 
+## Tests
+There are no tests for this application. 
 
-## WHEN I view the UV index
-THEN I am presented with a color that indicates whether the conditions are favorable, moderate, or severe
-
-## WHEN I view future weather conditions for that city
-THEN I am presented with a 5-day forecast that displays the date, an icon representation of weather conditions, the temperature, the wind speed, and the humidity
-
-## WHEN I click on a city in the search history
-THEN I am again presented with current and future conditions for that city
-
-    <div id="card" class="col-3 f-card-one>
-              <div id="day-one">
-                <img id="forecastWeatherIcon" alt="">
-                <div id="forecastTemp"></div>
-                <div id="forecastWind"></div>
-                <div id="forecastHumidity"></div>
-              </div>
-            </div>
-
-            <div id="card" class="col-3 f-card-two>
-              <div id="day-two">
-                <img id="forecastWeatherIcon" alt="">
-                <div id="forecastTemp"></div>
-                <div id="forecastWind"></div>
-                <div id="forecastHumidity"></div>
-              </div>
-            </div>
-
-            <div id="card">
-              <div id="day-three class="col-3 f-card-three">
-                <img id="forecastWeatherIcon" alt="">
-                <div id="forecastTemp"></div>
-                <div id="forecastWind"></div>
-                <div id="forecastHumidity"></div>
-              </div>
-            </div>
-
-            <div id="card" class="col-3 f-card-four>
-              <div id="day-four">
-                <img id="forecastWeatherIcon" alt="">
-                <div id="forecastTemp"></div>
-                <div id="forecastWind"></div>
-                <div id="forecastHumidity"></div>
-              </div>
-            </div>
-
-            <div id="card" class="col-3 f-card-five>
-              <div id="day-five">
-                <img id="forecastWeatherIcon" alt="">
-                <div id="forecastTemp"></div>
-                <div id="forecastWind"></div>
-                <div id="forecastHumidity"></div>
-              </div>
-            </div>
+## Questions
+If you have any questions about this projects, please contact me directly at christimarchetti@gmail.com. You can view more of my projects at https://github.com/chl850405.
